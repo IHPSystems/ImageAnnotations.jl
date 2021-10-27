@@ -1,10 +1,10 @@
 using Test
-import Detectors
+import ObjectDetectors
 
-@testset "DummyDetector" begin
-    detector = Detectors.DummyDetector()
+@testset "DummyObjectDetector" begin
+    detector = ObjectDetectors.DummyObjectDetector()
     img = Array{UInt8}(undef, 10, 10, 3)
-    detections = Detectors.detect(detector, img)
+    detections = ObjectDetectors.detect(detector, img)
     @test length(detections) > 0
     @test typeof(detections[1].class) == Int32
     @test typeof(detections[1].confidence) == Float32

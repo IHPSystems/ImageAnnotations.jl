@@ -1,4 +1,4 @@
 using Test
 
-include("dummydetectortest.jl")
-include("staticdetectortest.jl")
+include("DummyObjectDetectorTests.jl")
+include("StaticObjectDetectorTests.jl")

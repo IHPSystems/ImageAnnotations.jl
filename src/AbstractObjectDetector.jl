@@ -1,14 +1,14 @@
 import Base: (+), (/)
 
-export AbstractDetector,
+export AbstractObjectDetector,
        detect,
-       Detection,
+       ObjectDetection,
        Point,
        (+),
        (/),
        weighted_mean
 
-abstract type AbstractDetector end
+abstract type AbstractObjectDetector end
 
 struct Point
     row::UInt32
@@ -30,10 +30,10 @@ function weighted_mean(polygon::Array{Point, 1}) :: Point
     return reduce((+), polygon) / length(polygon)
 end
 
-mutable struct Detection
+mutable struct ObjectDetection
     polygon::Vector{Point}
     class::Int32
     confidence::Float32
 end
 
-detect(detector::AbstractDetector, image)::Vector{Detection} = error("No implementation for $(typeof(detector))")
+detect(detector::AbstractObjectDetector, image)::Vector{ObjectDetection} = error("No implementation for $(typeof(detector))")

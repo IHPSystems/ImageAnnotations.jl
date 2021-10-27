@@ -1,2 +1,2 @@
-# Detectors
+# ObjectDetectors
 
