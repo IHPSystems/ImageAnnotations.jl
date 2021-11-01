@@ -1,4 +1,6 @@
 using Test
 
-include("DummyObjectDetectorTests.jl")
-include("StaticObjectDetectorTests.jl")
+@testset "ObjectDetectors" begin
+    include("DummyObjectDetectorTests.jl")
+    include("StaticObjectDetectorTests.jl")
+end
