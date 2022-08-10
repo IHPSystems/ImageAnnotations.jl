@@ -1,5 +1,5 @@
-using ObjectDetectors
 using GeometryBasics
+using ImageAnnotations
 
 @testset "StaticObjectDetector" begin
     vertices = [Point2(2.0, 2.0), Point2(4.0, 2.0), Point2(3.0, 3.0)]

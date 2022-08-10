@@ -1,5 +1,5 @@
-using ObjectDetectors
 using GeometryBasics
+using ImageAnnotations
 
 @testset "BoundingBoxDetection" begin
     core_args = ("class", 0.7, 256, 256, MACHINE, "detector")
