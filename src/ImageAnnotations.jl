@@ -26,6 +26,8 @@ include("abstract_object_detection.jl")
 include("bounding_box_detection.jl")
 include("oriented_bounding_box_detection.jl")
 include("polygon_detection.jl")
+include("annotated_image.jl")
+include("data_set.jl")
 
 include("abstract_object_detector.jl")
 include("static_object_detector.jl")

@@ -6,4 +6,5 @@ using Test
     include("oriented_bounding_box_detection_tests.jl")
     include("polygon_detection_tests.jl")
     include("iou_tests.jl")
+    include("data_set_tests.jl")
 end
