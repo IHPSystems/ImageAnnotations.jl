@@ -10,6 +10,6 @@ using ImageAnnotations
     bb = bounding_box(detection)
     @test bb.origin == [2.0, 2.0]
     @test bb.widths == [2.0, 1.0]
-    
+
     @test_throws ArgumentError PolygonDetection([Point2(2.0, 2.0), Point2(4.0, 2.0)], core_args...)
 end
