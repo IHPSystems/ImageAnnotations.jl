@@ -1,11 +1,12 @@
 using GeometryBasics
 using ImageAnnotations
 
-@testset "OrientedBoundingBoxDetectionTests" begin
-    core_args = ("class", 0.7, 256, 256, MACHINE, "detector")
-    detection = OrientedBoundingBoxDetection(Point2(3.0, 3.0), 4.0, 2.0, pi / 2, core_args...)
+@testset "OrientedBoundingBoxAnnotationTests" begin
+    class = "class"
+    classification_args = (confidence = Float32(0.7), annotator_name = "annotator")
+    annotation = OrientedBoundingBoxAnnotation(Point2(3.0, 3.0), 4.0, 2.0, pi / 2, class; classification_args...)
 
-    bb = bounding_box(detection)
+    bb = bounding_box(annotation)
     error_margin = 1.0e-5
     origin_diff = bb.origin - Point2(2.0, 1.0)
     @test abs(origin_diff.data[1]) < error_margin && abs(origin_diff.data[2]) < error_margin

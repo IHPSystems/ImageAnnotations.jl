@@ -2,34 +2,40 @@ module ImageAnnotations
 
 using GeometryBasics
 
-export AbstractObjectDetection,
-    DetectorType,
-    HUMAN,
-    MACHINE,
-    class_name,
+export AbstractClassificationImageAnnotation,
+    AbstractImageAnnotation,
+    AbstractRegressionImageAnnotation,
+    ClassificationImageAnnotation,
+    RegressionImageAnnotation,
+    class,
     confidence,
-    image_width,
-    image_height,
-    detector_type,
-    detector_name,
-    centroid,
-    bounding_box,
-    bounding_box_detection,
-    iou
-export AbstractObjectDetector, detect
-export BoundingBoxDetection, create_with_center
-export OrientedBoundingBoxDetection, width, height, orientation, rotate_point
-export PolygonDetection, vertices
-export StaticObjectDetector, create_polygon
+    annotator_name,
+    value
 
-include("abstract_object_detection.jl")
-include("bounding_box_detection.jl")
-include("oriented_bounding_box_detection.jl")
-include("polygon_detection.jl")
+export AbstractObjectAnnotation, image_width, image_height, centroid, bounding_box, bounding_box_annotation, iou
+export BoundingBoxAnnotation, bounding_box_annotation_with_center
+export OrientedBoundingBoxAnnotation, width, height, orientation
+export PolygonAnnotation, vertices
+
+export AnnotatedImage, ClassificationImageAnnotationDataSet, annotations
+
+export AbstractObjectAnnotator, annotate
+export StaticObjectAnnotator
+
+include("image_annotation.jl")
+include("classification_annotation.jl")
+include("regression_image_annotation.jl")
+
+include("abstract_object_annotation.jl")
+include("bounding_box_annotation.jl")
+include("oriented_bounding_box_annotation.jl")
+include("polygon_annotation.jl")
 include("annotated_image.jl")
 include("data_set.jl")
 
-include("abstract_object_detector.jl")
-include("static_object_detector.jl")
+include("abstract_image_annotator.jl")
+include("static_image_annotator.jl")
+
+include("Dummies.jl")
 
 end # module
