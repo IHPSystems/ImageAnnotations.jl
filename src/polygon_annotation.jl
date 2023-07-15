@@ -11,6 +11,10 @@ struct PolygonAnnotation{C, T} <: AbstractObjectAnnotation{C, T}
     end
 end
 
+function Base.:(==)(a::PolygonAnnotation, b::PolygonAnnotation)
+    return a.vertices == b.vertices && a.classification_annotation == b.classification_annotation
+end
+
 vertices(annotation::PolygonAnnotation)::Vector{Point2} = annotation.vertices
 
 function centroid(annotation::PolygonAnnotation{C, T})::Point2{T} where {C, T <: Real}

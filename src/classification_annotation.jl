@@ -12,6 +12,10 @@ function ClassificationImageAnnotation(
     return ClassificationImageAnnotation{C}(class, confidence, annotator_name)
 end
 
+function Base.:(==)(a::ClassificationImageAnnotation, b::ClassificationImageAnnotation)
+    return a.class == b.class && a.confidence == b.confidence && a.annotator_name == b.annotator_name
+end
+
 class(annotation::ClassificationImageAnnotation) = annotation.class
 confidence(annotation::ClassificationImageAnnotation) = annotation.confidence
 annotator_name(annotation::ClassificationImageAnnotation) = annotation.annotator_name

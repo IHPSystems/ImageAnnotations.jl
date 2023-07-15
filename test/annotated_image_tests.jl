@@ -14,4 +14,10 @@ using Test
         annotated_image = AnnotatedImage([ClassificationImageAnnotation(1), ClassificationImageAnnotation(2)])
         @test length(annotations(annotated_image)) == 2
     end
+
+    @testset "Equality" begin
+        @test AnnotatedImage{ClassificationImageAnnotation}() == AnnotatedImage{ClassificationImageAnnotation}()
+        @test AnnotatedImage([ClassificationImageAnnotation(1)]) == AnnotatedImage([ClassificationImageAnnotation(1)])
+        @test AnnotatedImage([ClassificationImageAnnotation(1)]) != AnnotatedImage([ClassificationImageAnnotation(2)])
+    end
 end

@@ -6,6 +6,12 @@ using Test
         empty_data_set = ClassificationImageAnnotationDataSet{Int, ClassificationImageAnnotation{Int}}()
         @test length(empty_data_set) == 0
     end
+
+    @testset "Equality" begin
+        @test ClassificationImageAnnotationDataSet{Int, ClassificationImageAnnotation{Int}}() ==
+            ClassificationImageAnnotationDataSet{Int, ClassificationImageAnnotation{Int}}()
+    end
+
     @testset "Implements MLUtils data set interface" begin
         @testset "Empty Data Set" begin
             data_set = ClassificationImageAnnotationDataSet(String[], AnnotatedImage{BoundingBoxAnnotation{String, Float64}}[])

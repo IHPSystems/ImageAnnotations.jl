@@ -12,6 +12,10 @@ function ClassificationImageAnnotationDataSet{C, A}() where {C, A <: AbstractIma
     return ClassificationImageAnnotationDataSet(C[], AnnotatedImage{A}[])
 end
 
+function Base.:(==)(a::ClassificationImageAnnotationDataSet, b::ClassificationImageAnnotationDataSet)
+    return a.classes == b.classes && a.annotated_images == b.annotated_images
+end
+
 # Iteration interface, cf. https://docs.julialang.org/en/v1/manual/interfaces/#man-interface-iteration
 
 Base.iterate(data_set::ClassificationImageAnnotationDataSet) = iterate(data_set.annotated_images)

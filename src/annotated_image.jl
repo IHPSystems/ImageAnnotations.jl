@@ -22,4 +22,11 @@ function AnnotatedImage(annotation::A) where {A <: AbstractImageAnnotation}
     return AnnotatedImage([annotation])
 end
 
+function Base.:(==)(a::AnnotatedImage, b::AnnotatedImage)
+    return a.annotations == b.annotations &&
+           a.image_file_path == b.image_file_path &&
+           a.image_height == b.image_height &&
+           a.image_width == b.image_width
+end
+
 annotations(annotated_image::AnnotatedImage) = annotated_image.annotations

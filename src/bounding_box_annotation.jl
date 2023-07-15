@@ -36,6 +36,10 @@ function BoundingBoxAnnotation(box::Rect2{T}, class::C; kwargs...) where {C, T}
     return BoundingBoxAnnotation{C, T}(box, classification_annotation)
 end
 
+function Base.:(==)(a::BoundingBoxAnnotation, b::BoundingBoxAnnotation)
+    return a.rect == b.rect && a.classification_annotation == b.classification_annotation
+end
+
 function bounding_box_annotation_with_center(center::Point2{T}, width::T, height::T, class::C; kwargs...) where {C, T}
     top_left = center - Point2{T}(width, height) / 2
     return BoundingBoxAnnotation(top_left, width, height, class; kwargs...)

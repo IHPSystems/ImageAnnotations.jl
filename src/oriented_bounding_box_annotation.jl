@@ -11,6 +11,14 @@ function OrientedBoundingBoxAnnotation(center::Point2{T}, width::T, height::T, o
     return OrientedBoundingBoxAnnotation{C, T}(center, width, height, orientation, core)
 end
 
+function Base.:(==)(a::OrientedBoundingBoxAnnotation, b::OrientedBoundingBoxAnnotation)
+    return a.center == b.center &&
+           a.width == b.width &&
+           a.height == b.height &&
+           a.orientation == b.orientation &&
+           a.classification_annotation == b.classification_annotation
+end
+
 width(annotation::OrientedBoundingBoxAnnotation) = annotation.width
 height(annotation::OrientedBoundingBoxAnnotation) = annotation.height
 orientation(annotation::OrientedBoundingBoxAnnotation)::Float32 = annotation.orientation

@@ -12,6 +12,10 @@ function RegressionImageAnnotation(
     return RegressionImageAnnotation{T}(value, confidence, annotator_name)
 end
 
+function Base.:(==)(a::RegressionImageAnnotation, b::RegressionImageAnnotation)
+    return a.value == b.value && a.confidence == b.confidence && a.annotator_name == b.annotator_name
+end
+
 value(annotation::RegressionImageAnnotation) = annotation.value
 confidence(annotation::RegressionImageAnnotation) = annotation.confidence
 annotator_name(annotation::RegressionImageAnnotation) = annotation.annotator_name
