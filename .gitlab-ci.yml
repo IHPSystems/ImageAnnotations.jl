@@ -4,6 +4,9 @@ include:
     file: /templates.gitlab-ci.yaml
   - project: ihp/julia/julia-gitlab-ci-templates
     ref: v1.5.0
+    file: /jobs/analyze_package.gitlab-ci.yaml
+  - project: ihp/julia/julia-gitlab-ci-templates
+    ref: v1.5.0
     file: /jobs/format.gitlab-ci.yaml
 
 test:
