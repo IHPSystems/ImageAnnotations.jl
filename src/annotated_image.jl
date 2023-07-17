@@ -14,12 +14,12 @@ function AnnotatedImage(
     return AnnotatedImage(annotations, image_file_path, image_height, image_width)
 end
 
-function AnnotatedImage()
-    return AnnotatedImage(AbstractImageAnnotation[])
+function AnnotatedImage(; kwargs...)
+    return AnnotatedImage(AbstractImageAnnotation[]; kwargs...)
 end
 
-function AnnotatedImage(annotation::AbstractImageAnnotation)
-    return AnnotatedImage(AbstractImageAnnotation[annotation])
+function AnnotatedImage(annotation::AbstractImageAnnotation; kwargs...)
+    return AnnotatedImage(AbstractImageAnnotation[annotation]; kwargs...)
 end
 
 function Base.:(==)(a::AnnotatedImage, b::AnnotatedImage)
