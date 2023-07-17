@@ -2,6 +2,8 @@ module ImageAnnotations
 
 using GeometryBasics
 
+export AbstractLabel, Label
+
 export AbstractClassificationImageAnnotation,
     AbstractImageAnnotation,
     AbstractRegressionImageAnnotation,
@@ -21,6 +23,8 @@ export AnnotatedImage, ClassificationImageAnnotationDataSet, annotations
 
 export AbstractObjectAnnotator, annotate
 export StaticObjectAnnotator
+
+include("label.jl")
 
 include("image_annotation.jl")
 include("classification_annotation.jl")
