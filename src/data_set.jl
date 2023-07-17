@@ -2,14 +2,13 @@ abstract type AbstractImageAnnotationDataSet end
 
 abstract type AbstractClassificationImageAnnotationDataSet{C} <: AbstractImageAnnotationDataSet end
 
-struct ClassificationImageAnnotationDataSet{C, A <: AbstractClassificationImageAnnotation{C}} <:
-       AbstractClassificationImageAnnotationDataSet{C}
+struct ClassificationImageAnnotationDataSet{C} <: AbstractClassificationImageAnnotationDataSet{C}
     classes::Vector{C}
-    annotated_images::Vector{AnnotatedImage{A}}
+    annotated_images::Vector{AnnotatedImage}
 end
 
-function ClassificationImageAnnotationDataSet{C, A}() where {C, A <: AbstractImageAnnotation}
-    return ClassificationImageAnnotationDataSet(C[], AnnotatedImage{A}[])
+function ClassificationImageAnnotationDataSet{C}() where {C}
+    return ClassificationImageAnnotationDataSet(C[], AnnotatedImage[])
 end
 
 function Base.:(==)(a::ClassificationImageAnnotationDataSet, b::ClassificationImageAnnotationDataSet)

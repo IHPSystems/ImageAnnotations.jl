@@ -3,18 +3,17 @@ using Test
 
 @testset "Data Set" begin
     @testset "Construction of empty set" begin
-        empty_data_set = ClassificationImageAnnotationDataSet{Int, ClassificationImageAnnotation{Int}}()
+        empty_data_set = ClassificationImageAnnotationDataSet{Int}()
         @test length(empty_data_set) == 0
     end
 
     @testset "Equality" begin
-        @test ClassificationImageAnnotationDataSet{Int, ClassificationImageAnnotation{Int}}() ==
-            ClassificationImageAnnotationDataSet{Int, ClassificationImageAnnotation{Int}}()
+        @test ClassificationImageAnnotationDataSet{Int}() == ClassificationImageAnnotationDataSet{Int}()
     end
 
     @testset "Implements MLUtils data set interface" begin
         @testset "Empty Data Set" begin
-            data_set = ClassificationImageAnnotationDataSet(String[], AnnotatedImage{BoundingBoxAnnotation{String, Float64}}[])
+            data_set = ClassificationImageAnnotationDataSet(String[], AnnotatedImage[])
 
             @test length(data_set) == 0
         end

@@ -1,5 +1,5 @@
-struct AnnotatedImage{A <: AbstractImageAnnotation}
-    annotations::Vector{A}
+struct AnnotatedImage
+    annotations::Vector{AbstractImageAnnotation}
     image_file_path::Union{String, Nothing}
     image_height::Union{Int, Nothing}
     image_width::Union{Int, Nothing}
@@ -14,12 +14,12 @@ function AnnotatedImage(
     return AnnotatedImage(annotations, image_file_path, image_height, image_width)
 end
 
-function AnnotatedImage{A}() where {A <: AbstractImageAnnotation}
-    return AnnotatedImage(A[])
+function AnnotatedImage()
+    return AnnotatedImage(AbstractImageAnnotation[])
 end
 
-function AnnotatedImage(annotation::A) where {A <: AbstractImageAnnotation}
-    return AnnotatedImage([annotation])
+function AnnotatedImage(annotation::AbstractImageAnnotation)
+    return AnnotatedImage(AbstractImageAnnotation[annotation])
 end
 
 function Base.:(==)(a::AnnotatedImage, b::AnnotatedImage)
