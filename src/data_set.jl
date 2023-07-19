@@ -11,6 +11,14 @@ function ClassificationImageAnnotationDataSet{C}() where {C}
     return ClassificationImageAnnotationDataSet(C[], AnnotatedImage[])
 end
 
+function ClassificationImageAnnotationDataSet(annotated_images::Vector{AnnotatedImage})
+    return ClassificationImageAnnotationDataSet(get_labels(annotated_images), annotated_images)
+end
+
+function ClassificationImageAnnotationDataSet(annotated_image::AnnotatedImage)
+    return ClassificationImageAnnotationDataSet([annotated_image])
+end
+
 function Base.:(==)(a::ClassificationImageAnnotationDataSet, b::ClassificationImageAnnotationDataSet)
     return a.classes == b.classes && a.annotated_images == b.annotated_images
 end
@@ -27,3 +35,7 @@ Base.eltype(data_set::ClassificationImageAnnotationDataSet) = eltype(data_set.an
 Base.getindex(data_set::ClassificationImageAnnotationDataSet, i::Int) = data_set.annotated_images[i]
 Base.firstindex(data_set::ClassificationImageAnnotationDataSet) = firstindex(data_set.annotated_images)
 Base.lastindex(data_set::ClassificationImageAnnotationDataSet) = lastindex(data_set.annotated_images)
+
+get_labels(data_set::ClassificationImageAnnotationDataSet) = get_labels(data_set.annotated_images)
+
+get_labels(annotated_images::Vector{AnnotatedImage}) = unique(class.(Iterators.flatten(annotations.(annotated_images))))

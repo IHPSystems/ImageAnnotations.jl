@@ -19,7 +19,9 @@ export BoundingBoxAnnotation, bounding_box_annotation_with_center
 export OrientedBoundingBoxAnnotation, width, height, orientation
 export PolygonAnnotation, vertices
 
-export AnnotatedImage, ClassificationImageAnnotationDataSet, annotations
+export AnnotatedImage, annotations
+
+export ClassificationImageAnnotationDataSet, get_labels
 
 export AbstractObjectAnnotator, annotate
 export StaticObjectAnnotator

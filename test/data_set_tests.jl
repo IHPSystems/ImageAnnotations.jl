@@ -34,4 +34,44 @@ using Test
             @test data_set[3] == annotated_image3
         end
     end
+
+    @testset "Labels" begin
+        @testset "Empty set" begin
+            data_set = ClassificationImageAnnotationDataSet{Int}()
+            @test get_labels(data_set) == []
+        end
+        @testset "Single annotation" begin
+            label = "aeroplane"
+            data_set = ClassificationImageAnnotationDataSet(AnnotatedImage(ClassificationImageAnnotation(label)))
+            @test get_labels(data_set) == [label]
+        end
+        @testset "Multiple annotations" begin
+            label = "aeroplane"
+            data_set = ClassificationImageAnnotationDataSet(
+                AnnotatedImage([ClassificationImageAnnotation(label), ClassificationImageAnnotation(label)])
+            )
+            @test get_labels(data_set) == [label]
+        end
+        @testset "Multiple annotated images" begin
+            label = "aeroplane"
+            data_set = ClassificationImageAnnotationDataSet([
+                AnnotatedImage(ClassificationImageAnnotation(label)), AnnotatedImage(ClassificationImageAnnotation(label))
+            ])
+            @test get_labels(data_set) == [label]
+        end
+        @testset "Multiple labels" begin
+            label1 = "aeroplane"
+            label2 = "car"
+            data_set = ClassificationImageAnnotationDataSet([
+                AnnotatedImage([ClassificationImageAnnotation(label1), ClassificationImageAnnotation(label2)]),
+                AnnotatedImage(ClassificationImageAnnotation(label1)),
+            ])
+            @test get_labels(data_set) == [label1, label2]
+        end
+        @testset "Single label annotation" begin
+            label = Label("aeroplane")
+            data_set = ClassificationImageAnnotationDataSet(AnnotatedImage(ClassificationImageAnnotation(label)))
+            @test get_labels(data_set) == [label]
+        end
+    end
 end
