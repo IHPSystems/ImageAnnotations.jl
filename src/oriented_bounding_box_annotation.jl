@@ -1,14 +1,14 @@
-struct OrientedBoundingBoxAnnotation{C, T} <: AbstractObjectAnnotation{C, T}
+struct OrientedBoundingBoxAnnotation{L, T} <: AbstractObjectAnnotation{L, T}
     center::Point2{T}
     width::T
     height::T
     orientation::Float32
-    classification_annotation::ClassificationImageAnnotation{C}
+    annotation::ImageAnnotation{L}
 end
 
-function OrientedBoundingBoxAnnotation(center::Point2{T}, width::T, height::T, orientation::T, class::C; kwargs...) where {C, T}
-    core = ClassificationImageAnnotation(class; kwargs...)
-    return OrientedBoundingBoxAnnotation{C, T}(center, width, height, orientation, core)
+function OrientedBoundingBoxAnnotation(center::Point2{T}, width::T, height::T, orientation::T, label::L; kwargs...) where {L, T}
+    core = ImageAnnotation(label; kwargs...)
+    return OrientedBoundingBoxAnnotation{L, T}(center, width, height, orientation, core)
 end
 
 function Base.:(==)(a::OrientedBoundingBoxAnnotation, b::OrientedBoundingBoxAnnotation)
@@ -16,18 +16,18 @@ function Base.:(==)(a::OrientedBoundingBoxAnnotation, b::OrientedBoundingBoxAnno
            a.width == b.width &&
            a.height == b.height &&
            a.orientation == b.orientation &&
-           a.classification_annotation == b.classification_annotation
+           a.annotation == b.annotation
 end
 
-width(annotation::OrientedBoundingBoxAnnotation) = annotation.width
-height(annotation::OrientedBoundingBoxAnnotation) = annotation.height
-orientation(annotation::OrientedBoundingBoxAnnotation)::Float32 = annotation.orientation
+get_width(annotation::OrientedBoundingBoxAnnotation) = annotation.width
+get_height(annotation::OrientedBoundingBoxAnnotation) = annotation.height
+get_orientation(annotation::OrientedBoundingBoxAnnotation)::Float32 = annotation.orientation
 
-function centroid(annotation::OrientedBoundingBoxAnnotation{C, T})::Point2{T} where {C, T}
+function get_centroid(annotation::OrientedBoundingBoxAnnotation{L, T})::Point2{T} where {L, T}
     return annotation.center
 end
 
-function bounding_box_annotation(annotation::OrientedBoundingBoxAnnotation{C, T})::BoundingBoxAnnotation{C, T} where {C, T}
+function get_bounding_box_annotation(annotation::OrientedBoundingBoxAnnotation{L, T})::BoundingBoxAnnotation{L, T} where {L, T}
     # Corners of non-oriented box
     tl = annotation.center - Point2{T}(annotation.width, annotation.height) / 2
     tr = tl + Point2{T}(annotation.width, 0)
@@ -42,7 +42,7 @@ function bounding_box_annotation(annotation::OrientedBoundingBoxAnnotation{C, T}
         rotate_point(bl, annotation.center, annotation.orientation),
     ]
 
-    return BoundingBoxAnnotation(rotated_polygon, annotation.classification_annotation)
+    return BoundingBoxAnnotation(rotated_polygon, annotation.annotation)
 end
 
 function rotate_point(p::Point2{T}, origin::Point2{T}, theta::AbstractFloat)::Point2{T} where {T}

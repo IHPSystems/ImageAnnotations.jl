@@ -1,15 +1,11 @@
-struct StaticClassificationImageAnnotator{C, A <: AbstractClassificationImageAnnotation{C}} <: AbstractClassificationImageAnnotator{C, A}
+struct StaticImageAnnotator{L, A <: AbstractImageAnnotation{L}} <: AbstractImageAnnotator{L, A}
     annotations::Vector{A}
 end
 
-struct StaticRegressionImageAnnotator{T, A <: AbstractRegressionImageAnnotation{T}} <: AbstractRegressionImageAnnotator{T, A}
+struct StaticObjectAnnotator{L, T <: Real, A <: AbstractObjectAnnotation{L, T}} <: AbstractObjectAnnotator{L, T, A}
     annotations::Vector{A}
 end
 
-struct StaticObjectAnnotator{C, T <: Real, A <: AbstractObjectAnnotation{C, T}} <: AbstractObjectAnnotator{C, T, A}
-    annotations::Vector{A}
-end
-
-function annotate(image, annotator::Union{StaticClassificationImageAnnotator, StaticRegressionImageAnnotator, StaticObjectAnnotator})
+function annotate(image, annotator::Union{StaticImageAnnotator, StaticObjectAnnotator})
     return annotator.annotations
 end

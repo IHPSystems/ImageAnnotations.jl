@@ -1,24 +1,24 @@
-abstract type AbstractObjectAnnotation{C, T <: Real} <: AbstractClassificationImageAnnotation{C} end
+abstract type AbstractObjectAnnotation{L, T <: Real} <: AbstractImageAnnotation{L} end
 
-class(annotation::AbstractObjectAnnotation) = annotation.classification_annotation.class
-confidence(annotation::AbstractObjectAnnotation) = annotation.classification_annotation.confidence
-annotator_name(annotation::AbstractObjectAnnotation) = annotation.classification_annotation.annotator_name
+get_label(annotation::AbstractObjectAnnotation) = get_label(annotation.annotation)
+get_confidence(annotation::AbstractObjectAnnotation) = get_confidence(annotation.annotation)
+get_annotator_name(annotation::AbstractObjectAnnotation) = get_annotator_name(annotation.annotation)
 
-function centroid(annotation::AbstractObjectAnnotation{T})::Point2{T} where {T}
+function get_centroid(annotation::AbstractObjectAnnotation{T})::Point2{T} where {T}
     return error("No implementation for $(typeof(annotation))")
 end
 
-function bounding_box_annotation(annotation::AbstractObjectAnnotation{C, T})::BoundingBoxAnnotation{C, T} where {C, T}
+function get_bounding_box_annotation(annotation::AbstractObjectAnnotation{L, T})::BoundingBoxAnnotation{L, T} where {L, T}
     return error("No implementation for $(typeof(annotation))")
 end
 
-function bounding_box(annotation::AbstractObjectAnnotation{C, T})::Rect2{T} where {C, T}
-    return bounding_box_annotation(annotation).rect
+function get_bounding_box(annotation::AbstractObjectAnnotation{L, T})::Rect2{T} where {L, T}
+    return get_bounding_box_annotation(annotation).rect
 end
 
-function iou(a1::AbstractObjectAnnotation{T}, a2::AbstractObjectAnnotation{T}) where {T}
-    bb1 = bounding_box(a1)
-    bb2 = bounding_box(a2)
+function compute_iou(a1::AbstractObjectAnnotation{T}, a2::AbstractObjectAnnotation{T}) where {T}
+    bb1 = get_bounding_box(a1)
+    bb2 = get_bounding_box(a2)
     left_1, top_1 = bb1.origin
     right_1, bottom_1 = bb1.origin + bb1.widths
     left_2, top_2 = bb2.origin

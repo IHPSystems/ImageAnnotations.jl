@@ -1,8 +1,7 @@
 using Test
 
 @testset "ImageAnnotations" begin
-    include("classification_image_annotation_tests.jl")
-    include("regression_image_annotation_tests.jl")
+    include("image_annotation_tests.jl")
     include("static_object_annotator_tests.jl")
     include("bounding_box_annotation_tests.jl")
     include("oriented_bounding_box_annotation_tests.jl")

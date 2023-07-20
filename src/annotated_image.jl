@@ -29,4 +29,4 @@ function Base.:(==)(a::AnnotatedImage, b::AnnotatedImage)
            a.image_width == b.image_width
 end
 
-annotations(annotated_image::AnnotatedImage) = annotated_image.annotations
+get_annotations(annotated_image::AnnotatedImage) = annotated_image.annotations

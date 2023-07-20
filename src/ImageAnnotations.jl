@@ -4,24 +4,16 @@ using GeometryBasics
 
 export AbstractLabel, Label
 
-export AbstractClassificationImageAnnotation,
-    AbstractImageAnnotation,
-    AbstractRegressionImageAnnotation,
-    ClassificationImageAnnotation,
-    RegressionImageAnnotation,
-    class,
-    confidence,
-    annotator_name,
-    value
+export AbstractImageAnnotation, ImageAnnotation, get_label, get_confidence, get_annotator_name
 
-export AbstractObjectAnnotation, image_width, image_height, centroid, bounding_box, bounding_box_annotation, iou
-export BoundingBoxAnnotation, bounding_box_annotation_with_center
-export OrientedBoundingBoxAnnotation, width, height, orientation
-export PolygonAnnotation, vertices
+export AbstractObjectAnnotation, get_centroid, get_bounding_box, get_bounding_box_annotation, compute_iou
+export BoundingBoxAnnotation, create_bounding_box_annotation_with_center
+export OrientedBoundingBoxAnnotation, get_width, get_height, get_orientation
+export PolygonAnnotation, get_vertices
 
-export AnnotatedImage, annotations
+export AnnotatedImage, get_annotations
 
-export ClassificationImageAnnotationDataSet, get_labels
+export ImageAnnotationDataSet, get_labels
 
 export AbstractObjectAnnotator, annotate
 export StaticObjectAnnotator
@@ -29,8 +21,6 @@ export StaticObjectAnnotator
 include("label.jl")
 
 include("image_annotation.jl")
-include("classification_annotation.jl")
-include("regression_image_annotation.jl")
 
 include("abstract_object_annotation.jl")
 include("bounding_box_annotation.jl")

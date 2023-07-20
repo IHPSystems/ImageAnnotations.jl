@@ -1,26 +1,26 @@
-struct PolygonAnnotation{C, T} <: AbstractObjectAnnotation{C, T}
+struct PolygonAnnotation{L, T} <: AbstractObjectAnnotation{L, T}
     vertices::Vector{Point2{T}}
-    classification_annotation::ClassificationImageAnnotation{C}
+    annotation::ImageAnnotation{L}
 
-    function PolygonAnnotation(vertices::Vector{Point2{T}}, class::C; kwargs...) where {C, T}
+    function PolygonAnnotation(vertices::Vector{Point2{T}}, label::L; kwargs...) where {L, T}
         if length(vertices) < 3
             throw(ArgumentError("Cannot create a polygon with less than 3 vertices."))
         end
-        core = ClassificationImageAnnotation(class; kwargs...)
-        return new{C, T}(vertices, core)
+        core = ImageAnnotation(label; kwargs...)
+        return new{L, T}(vertices, core)
     end
 end
 
 function Base.:(==)(a::PolygonAnnotation, b::PolygonAnnotation)
-    return a.vertices == b.vertices && a.classification_annotation == b.classification_annotation
+    return a.vertices == b.vertices && a.annotation == b.annotation
 end
 
-vertices(annotation::PolygonAnnotation)::Vector{Point2} = annotation.vertices
+get_vertices(annotation::PolygonAnnotation)::Vector{Point2} = annotation.vertices
 
-function centroid(annotation::PolygonAnnotation{C, T})::Point2{T} where {C, T <: Real}
+function get_centroid(annotation::PolygonAnnotation{L, T})::Point2{T} where {L, T <: Real}
     return reduce((+), annotation.vertices) / length(annotation.vertices)
 end
 
-function bounding_box_annotation(annotation::PolygonAnnotation{C, T})::BoundingBoxAnnotation{C, T} where {C, T}
-    return BoundingBoxAnnotation(annotation.vertices, annotation.classification_annotation)
+function get_bounding_box_annotation(annotation::PolygonAnnotation{L, T})::BoundingBoxAnnotation{L, T} where {L, T}
+    return BoundingBoxAnnotation(annotation.vertices, annotation.annotation)
 end

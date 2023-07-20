@@ -2,7 +2,8 @@ module Dummies
 
 using ..ImageAnnotations
 
-create_class(::Type{Int}) = 2
-create_class(::Type{String}) = "aeroplane"
+create_label(::Type{Int}) = 2
+create_label(::Type{Float64}) = 0.5
+create_label(::Type{String}) = "aeroplane"
 
 end

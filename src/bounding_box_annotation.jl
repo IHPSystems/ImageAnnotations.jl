@@ -1,20 +1,20 @@
-struct BoundingBoxAnnotation{C, T} <: AbstractObjectAnnotation{C, T}
+struct BoundingBoxAnnotation{L, T} <: AbstractObjectAnnotation{L, T}
     rect::Rect2{T}
-    classification_annotation::ClassificationImageAnnotation{C}
+    annotation::ImageAnnotation{L}
 end
 
-function BoundingBoxAnnotation(top_left::Point2{T}, width::T, height::T, class::C; kwargs...) where {C, T}
-    classification_annotation = ClassificationImageAnnotation(class; kwargs...)
-    return BoundingBoxAnnotation{C, T}(Rect2{T}(top_left.data[1], top_left.data[2], width, height), classification_annotation)
+function BoundingBoxAnnotation(top_left::Point2{T}, width::T, height::T, label::L; kwargs...) where {L, T}
+    annotation = ImageAnnotation(label; kwargs...)
+    return BoundingBoxAnnotation{L, T}(Rect2{T}(top_left.data[1], top_left.data[2], width, height), annotation)
 end
 
-function BoundingBoxAnnotation(top_left::Point2{T}, bottom_right::Point2{T}, class::C; kwargs...) where {C, T}
+function BoundingBoxAnnotation(top_left::Point2{T}, bottom_right::Point2{T}, label::L; kwargs...) where {L, T}
     width = bottom_right.data[1] - top_left.data[1]
     height = bottom_right.data[2] - top_left.data[2]
-    return BoundingBoxAnnotation(top_left, width, height, class; kwargs...)
+    return BoundingBoxAnnotation(top_left, width, height, label; kwargs...)
 end
 
-function BoundingBoxAnnotation(vertices::Vector{Point2{T}}, classification_annotation::ClassificationImageAnnotation{C}) where {C, T}
+function BoundingBoxAnnotation(vertices::Vector{Point2{T}}, annotation::ImageAnnotation{L}) where {L, T}
     min_x = minimum([x for (x, _) in vertices])
     max_x = maximum([x for (x, _) in vertices])
     min_y = minimum([y for (_, y) in vertices])
@@ -23,32 +23,32 @@ function BoundingBoxAnnotation(vertices::Vector{Point2{T}}, classification_annot
     width = max_x - min_x
     height = max_y - min_y
 
-    return BoundingBoxAnnotation{C, T}(Rect2{T}(min_x, min_y, width, height), classification_annotation)
+    return BoundingBoxAnnotation{L, T}(Rect2{T}(min_x, min_y, width, height), annotation)
 end
 
-function BoundingBoxAnnotation(vertices::Vector{Point2{T}}, class::C; kwargs...) where {C, T}
-    classification_annotation = ClassificationImageAnnotation(class; kwargs...)
-    return BoundingBoxAnnotation(vertices, classification_annotation)
+function BoundingBoxAnnotation(vertices::Vector{Point2{T}}, label::L; kwargs...) where {L, T}
+    annotation = ImageAnnotation(label; kwargs...)
+    return BoundingBoxAnnotation(vertices, annotation)
 end
 
-function BoundingBoxAnnotation(box::Rect2{T}, class::C; kwargs...) where {C, T}
-    classification_annotation = ClassificationImageAnnotation(class; kwargs...)
-    return BoundingBoxAnnotation{C, T}(box, classification_annotation)
+function BoundingBoxAnnotation(box::Rect2{T}, label::L; kwargs...) where {L, T}
+    annotation = ImageAnnotation(label; kwargs...)
+    return BoundingBoxAnnotation{L, T}(box, annotation)
 end
 
 function Base.:(==)(a::BoundingBoxAnnotation, b::BoundingBoxAnnotation)
-    return a.rect == b.rect && a.classification_annotation == b.classification_annotation
+    return a.rect == b.rect && a.annotation == b.annotation
 end
 
-function bounding_box_annotation_with_center(center::Point2{T}, width::T, height::T, class::C; kwargs...) where {C, T}
+function create_bounding_box_annotation_with_center(center::Point2{T}, width::T, height::T, label::L; kwargs...) where {L, T}
     top_left = center - Point2{T}(width, height) / 2
-    return BoundingBoxAnnotation(top_left, width, height, class; kwargs...)
+    return BoundingBoxAnnotation(top_left, width, height, label; kwargs...)
 end
 
-function centroid(annotation::BoundingBoxAnnotation{C, T})::Point2{Float64} where {C, T}
-    return bounding_box(annotation).origin + bounding_box(annotation).widths / 2
+function get_centroid(annotation::BoundingBoxAnnotation{L, T})::Point2{Float64} where {L, T}
+    return get_bounding_box(annotation).origin + get_bounding_box(annotation).widths / 2
 end
 
-function bounding_box_annotation(annotation::BoundingBoxAnnotation{C, T})::BoundingBoxAnnotation{C, T} where {C, T}
+function get_bounding_box_annotation(annotation::BoundingBoxAnnotation{L, T})::BoundingBoxAnnotation{L, T} where {L, T}
     return annotation
 end
