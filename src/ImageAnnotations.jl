@@ -2,6 +2,8 @@ module ImageAnnotations
 
 using GeometryBasics
 
+export AbstractConcept, AbstractConceptAttribute, CategoricalConceptAttribute, Concept
+
 export AbstractLabel, Label
 
 export AbstractImageAnnotation, ImageAnnotation, get_label, get_confidence, get_annotator_name
@@ -19,6 +21,7 @@ export AbstractObjectAnnotator, annotate
 export StaticObjectAnnotator
 
 include("label.jl")
+include("concept.jl")
 
 include("image_annotation.jl")
 

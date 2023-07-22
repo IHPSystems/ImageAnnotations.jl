@@ -1,6 +1,7 @@
 using Test
 
 @testset "ImageAnnotations" begin
+    include("concept_tests.jl")
     include("image_annotation_tests.jl")
     include("static_object_annotator_tests.jl")
     include("bounding_box_annotation_tests.jl")
