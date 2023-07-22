@@ -21,6 +21,6 @@ function get_centroid(annotation::PolygonAnnotation{L, T})::Point2{T} where {L, 
     return reduce((+), annotation.vertices) / length(annotation.vertices)
 end
 
-function get_bounding_box_annotation(annotation::PolygonAnnotation{L, T})::BoundingBoxAnnotation{L, T} where {L, T}
-    return BoundingBoxAnnotation(annotation.vertices, annotation.annotation)
+function get_bounding_box(annotation::PolygonAnnotation{L, T})::Rect2{T} where {L, T}
+    return get_bounding_box(annotation.vertices)
 end

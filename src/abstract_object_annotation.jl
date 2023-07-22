@@ -8,12 +8,8 @@ function get_centroid(annotation::AbstractObjectAnnotation{T})::Point2{T} where 
     return error("No implementation for $(typeof(annotation))")
 end
 
-function get_bounding_box_annotation(annotation::AbstractObjectAnnotation{L, T})::BoundingBoxAnnotation{L, T} where {L, T}
-    return error("No implementation for $(typeof(annotation))")
-end
-
 function get_bounding_box(annotation::AbstractObjectAnnotation{L, T})::Rect2{T} where {L, T}
-    return get_bounding_box_annotation(annotation).rect
+    return error("No implementation for $(typeof(annotation))")
 end
 
 function compute_iou(a1::AbstractObjectAnnotation{T}, a2::AbstractObjectAnnotation{T}) where {T}

@@ -27,7 +27,7 @@ function get_centroid(annotation::OrientedBoundingBoxAnnotation{L, T})::Point2{T
     return annotation.center
 end
 
-function get_bounding_box_annotation(annotation::OrientedBoundingBoxAnnotation{L, T})::BoundingBoxAnnotation{L, T} where {L, T}
+function get_bounding_box(annotation::OrientedBoundingBoxAnnotation{L, T})::Rect2{T} where {L, T}
     # Corners of non-oriented box
     tl = annotation.center - Point2{T}(annotation.width, annotation.height) / 2
     tr = tl + Point2{T}(annotation.width, 0)
@@ -42,7 +42,7 @@ function get_bounding_box_annotation(annotation::OrientedBoundingBoxAnnotation{L
         rotate_point(bl, annotation.center, annotation.orientation),
     ]
 
-    return BoundingBoxAnnotation(rotated_polygon, annotation.annotation)
+    return get_bounding_box(rotated_polygon)
 end
 
 function rotate_point(p::Point2{T}, origin::Point2{T}, theta::AbstractFloat)::Point2{T} where {T}
