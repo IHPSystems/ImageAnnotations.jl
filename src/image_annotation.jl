@@ -7,7 +7,7 @@ struct ImageAnnotation{L} <: AbstractImageAnnotation{L}
 end
 
 function ImageAnnotation(
-    label::L; confidence::Union{Float32, Nothing} = nothing, annotator_name::Union{String, Nothing} = nothing
+    label::L; confidence::Union{Float32, Nothing} = nothing, annotator_name::Union{AbstractString, Nothing} = nothing
 ) where {L}
     return ImageAnnotation{L}(label, confidence, annotator_name)
 end

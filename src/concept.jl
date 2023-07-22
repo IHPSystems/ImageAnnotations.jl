@@ -12,7 +12,7 @@ end
 function Concept(
     value::T;
     attributes::Vector{<:AbstractConceptAttribute} = Vector{AbstractConceptAttribute}(),
-    description::String = "",
+    description::AbstractString = "",
     examples::Vector{Dict{String, Any}} = Dict{String, Any}[],
 ) where {T}
     attributes_dict = Dict{String, AbstractConceptAttribute}([a.name => a for a in attributes])
@@ -35,7 +35,7 @@ struct CategoricalConceptAttribute{T} <: AbstractConceptAttribute
     end
 end
 
-function CategoricalConceptAttribute(name::String, values::Vector{T}) where {T}
+function CategoricalConceptAttribute(name::AbstractString, values::Vector{T}) where {T}
     if length(values) < 1
         throw(ArgumentError("CategoricalConceptAttribute must have at least one value"))
     end
