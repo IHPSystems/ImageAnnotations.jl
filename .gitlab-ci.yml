@@ -9,6 +9,10 @@ include:
     ref: v1.5.0
     file: /jobs/format.gitlab-ci.yaml
 
+analyze_package:
+  variables:
+    CI_JULIA_JET_TARGET_DEFINED_MODULES: "true"
+
 test:
   stage: test
   parallel:

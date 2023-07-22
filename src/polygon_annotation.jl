@@ -17,6 +17,8 @@ end
 
 get_vertices(annotation::PolygonAnnotation)::Vector{Point2} = annotation.vertices
 
+get_image_annotation(annotation::PolygonAnnotation) = annotation.annotation
+
 function get_centroid(annotation::PolygonAnnotation{L, T})::Point2{T} where {L, T <: Real}
     return reduce((+), annotation.vertices) / length(annotation.vertices)
 end

@@ -23,6 +23,8 @@ get_width(annotation::OrientedBoundingBoxAnnotation) = annotation.width
 get_height(annotation::OrientedBoundingBoxAnnotation) = annotation.height
 get_orientation(annotation::OrientedBoundingBoxAnnotation)::Float32 = annotation.orientation
 
+get_image_annotation(annotation::OrientedBoundingBoxAnnotation) = annotation.annotation
+
 function get_centroid(annotation::OrientedBoundingBoxAnnotation{L, T})::Point2{T} where {L, T}
     return annotation.center
 end

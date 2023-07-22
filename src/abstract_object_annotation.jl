@@ -1,8 +1,10 @@
 abstract type AbstractObjectAnnotation{L, T <: Real} <: AbstractImageAnnotation{L} end
 
-get_label(annotation::AbstractObjectAnnotation) = get_label(annotation.annotation)
-get_confidence(annotation::AbstractObjectAnnotation) = get_confidence(annotation.annotation)
-get_annotator_name(annotation::AbstractObjectAnnotation) = get_annotator_name(annotation.annotation)
+function get_image_annotation end
+
+get_label(annotation::AbstractObjectAnnotation) = get_label(get_image_annotation(annotation))
+get_confidence(annotation::AbstractObjectAnnotation) = get_confidence(get_image_annotation(annotation))
+get_annotator_name(annotation::AbstractObjectAnnotation) = get_annotator_name(get_image_annotation(annotation))
 
 function get_centroid(annotation::AbstractObjectAnnotation{T})::Point2{T} where {T}
     return error("No implementation for $(typeof(annotation))")
@@ -10,6 +12,33 @@ end
 
 function get_bounding_box(annotation::AbstractObjectAnnotation{L, T})::Rect2{T} where {L, T}
     return error("No implementation for $(typeof(annotation))")
+end
+
+function Base.isless(a::T, b::U) where {T <: AbstractObjectAnnotation, U <: AbstractObjectAnnotation}
+    if Symbol(T) < Symbol(U)
+        return true
+    end
+    a_box = get_bounding_box(a)
+    b_box = get_bounding_box(b)
+    if a_box.origin.data[1] < b_box.origin.data[1]
+        return true
+    elseif a_box.origin.data[1] > b_box.origin.data[1]
+        return false
+    elseif a_box.origin.data[2] < b_box.origin.data[2]
+        return true
+    elseif a_box.origin.data[2] > b_box.origin.data[2]
+        return false
+    elseif a_box.widths.data[1] < b_box.widths.data[1]
+        return true
+    elseif a_box.widths.data[1] > b_box.widths.data[1]
+        return false
+    elseif a_box.widths.data[2] < b_box.widths.data[2]
+        return true
+    elseif a_box.widths.data[2] > b_box.widths.data[2]
+        return false
+    else
+        return get_image_annotation(a) < get_image_annotation(b)
+    end
 end
 
 function compute_iou(a1::AbstractObjectAnnotation{T}, a2::AbstractObjectAnnotation{T}) where {T}

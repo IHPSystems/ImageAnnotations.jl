@@ -42,6 +42,8 @@ function create_bounding_box_annotation_with_center(center::Point2{T}, width::T,
     return BoundingBoxAnnotation(top_left, width, height, label; kwargs...)
 end
 
+get_image_annotation(annotation::BoundingBoxAnnotation) = annotation.annotation
+
 function get_centroid(annotation::BoundingBoxAnnotation{L, T})::Point2{Float64} where {L, T}
     return get_bounding_box(annotation).origin + get_bounding_box(annotation).widths / 2
 end

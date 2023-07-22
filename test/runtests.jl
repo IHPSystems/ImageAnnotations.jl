@@ -4,6 +4,7 @@ using Test
     include("concept_tests.jl")
     include("image_annotation_tests.jl")
     include("static_object_annotator_tests.jl")
+    include("abstract_object_annotation_tests.jl")
     include("bounding_box_annotation_tests.jl")
     include("oriented_bounding_box_annotation_tests.jl")
     include("polygon_annotation_tests.jl")

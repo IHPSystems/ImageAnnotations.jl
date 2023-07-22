@@ -29,4 +29,11 @@ function Base.:(==)(a::AnnotatedImage, b::AnnotatedImage)
            a.image_width == b.image_width
 end
 
+function Base.isless(a::AnnotatedImage, b::AnnotatedImage)
+    if a.image_file_path !== nothing && b.image_file_path !== nothing
+        return a.image_file_path < b.image_file_path
+    end
+    return a.annotations < b.annotations
+end
+
 get_annotations(annotated_image::AnnotatedImage) = annotated_image.annotations
