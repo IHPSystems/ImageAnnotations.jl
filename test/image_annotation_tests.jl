@@ -12,6 +12,12 @@ using Test
         end
     end
 
+    @testset "Mutability" begin
+        annotation = ImageAnnotation(1)
+        annotation.label = 2
+        @test annotation.label == 2
+    end
+
     @testset "Equality" begin
         @test ImageAnnotation(1) == ImageAnnotation(1)
         @test ImageAnnotation(1) != ImageAnnotation(2)

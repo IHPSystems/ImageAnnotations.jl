@@ -1,6 +1,6 @@
 abstract type AbstractImageAnnotation{L} end
 
-struct ImageAnnotation{L} <: AbstractImageAnnotation{L}
+mutable struct ImageAnnotation{L} <: AbstractImageAnnotation{L}
     label::L
     confidence::Union{Float32, Nothing}
     annotator_name::Union{String, Nothing}
