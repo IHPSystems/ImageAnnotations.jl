@@ -13,11 +13,11 @@ export BoundingBoxAnnotation, create_bounding_box_annotation_with_center
 export OrientedBoundingBoxAnnotation, get_width, get_height, get_orientation
 export PolygonAnnotation, get_vertices
 
-export AnnotatedImage, get_annotations
+export AbstractAnnotatedImage, AnnotatedImage, get_annotations
 
-export ImageAnnotationDataSet, get_labels
+export AbstractImageAnnotationDataSet, ImageAnnotationDataSet, get_labels
 
-export AbstractObjectAnnotator, annotate
+export AbstractImageAnnotator, AbstractObjectAnnotator, annotate
 export StaticObjectAnnotator
 
 include("label.jl")

@@ -1,4 +1,6 @@
-struct AnnotatedImage
+abstract type AbstractAnnotatedImage end
+
+struct AnnotatedImage <: AbstractAnnotatedImage
     annotations::Vector{AbstractImageAnnotation}
     image_file_path::Union{String, Nothing}
     image_height::Union{Int, Nothing}
