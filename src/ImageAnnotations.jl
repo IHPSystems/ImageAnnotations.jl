@@ -1,5 +1,6 @@
 module ImageAnnotations
 
+using ColorTypes
 using GeometryBasics
 
 export AbstractConcept, AbstractConceptAttribute, CategoricalConceptAttribute, Concept
