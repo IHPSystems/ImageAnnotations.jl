@@ -19,6 +19,18 @@ using Test
         @test length(get_annotations(annotated_image)) == 2
     end
 
+    @testset "Mutability" begin
+        annotated_image = AnnotatedImage()
+        annotated_image.annotations = [ImageAnnotation(1)]
+        annotated_image.image_file_path = "path/to/image"
+        annotated_image.image_height = 3
+        annotated_image.image_width = 4
+        @test annotated_image.annotations == [ImageAnnotation(1)]
+        @test annotated_image.image_file_path == "path/to/image"
+        @test annotated_image.image_height == 3
+        @test annotated_image.image_width == 4
+    end
+
     @testset "Equality" begin
         @test AnnotatedImage() == AnnotatedImage()
         @test AnnotatedImage([ImageAnnotation(1)]) == AnnotatedImage([ImageAnnotation(1)])
