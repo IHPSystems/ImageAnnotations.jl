@@ -48,6 +48,14 @@ using Test
         end
     end
 
+    @testset "Mutability" begin
+        annotation = BoundingBoxAnnotation(Point2(1.0, 2.0), 3.0, 4.0, "car")
+        annotation.rect = Rect2(Point2(2.0, 3.0), 4.0, 5.0)
+        annotation.annotation = ImageAnnotation("person")
+        @test annotation.rect == Rect2(Point2(2.0, 3.0), 4.0, 5.0)
+        @test annotation.annotation == ImageAnnotation("person")
+    end
+
     @testset "Equality" begin
         @test BoundingBoxAnnotation(Point2(1.0, 2.0), 3.0, 4.0, "car") == BoundingBoxAnnotation(Point2(1.0, 2.0), 3.0, 4.0, "car")
         @test BoundingBoxAnnotation(Point2(1.0, 2.0), 3.0, 4.0, "car") != BoundingBoxAnnotation(Point2(1.0, 2.0), 3.0, 4.0, "person")
