@@ -1,4 +1,4 @@
-struct BoundingBoxAnnotation{L, T} <: AbstractObjectAnnotation{L, T}
+mutable struct BoundingBoxAnnotation{L, T} <: AbstractObjectAnnotation{L, T}
     rect::Rect2{T}
     annotation::ImageAnnotation{L}
 end

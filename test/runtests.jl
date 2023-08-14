@@ -9,6 +9,7 @@ using Test
     include("oriented_bounding_box_annotation_tests.jl")
     include("polygon_annotation_tests.jl")
     include("iou_tests.jl")
+    include("label_tests.jl")
     include("annotated_image_tests.jl")
     include("data_set_tests.jl")
 end
