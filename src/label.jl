@@ -1,6 +1,6 @@
 abstract type AbstractLabel end
 
-struct Label{T} <: AbstractLabel
+mutable struct Label{T} <: AbstractLabel
     value::T
     attributes::Dict{String, Any}
 end
