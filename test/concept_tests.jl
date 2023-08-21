@@ -2,6 +2,25 @@ using ImageAnnotations
 using Test
 
 @testset "Concept" begin
+    @testset "Construction" begin
+        type_param_combos = [String]
+        type_combos(L) = [Concept{L}, Concept]
+        kwarg_combos = [NamedTuple(), (attributes = Vector{AbstractConceptAttribute}(),)]
+        for T in type_param_combos, TConcept in type_combos(T), kwargs in kwarg_combos
+            if kwargs == NamedTuple()
+                attributes = Dict{String, AbstractConceptAttribute}()
+            else
+                attributes = Dict{String, AbstractConceptAttribute}([a.name => a for a in kwargs.attributes])
+            end
+            @testset "$TConcept with type parameter $T and kwargs $kwargs" begin
+                concept_value = ImageAnnotations.Dummies.create_label(T)
+                concept = TConcept(concept_value; kwargs...)
+                @test concept.value == concept_value
+                @test concept.attributes == attributes
+            end
+        end
+    end
+
     @testset "Label in Concept" begin
         @testset "Label value must be equal to Concept value" begin
             bicycle_concept = Concept("bicycle")

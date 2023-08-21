@@ -6,7 +6,7 @@ struct ImageAnnotationDataSet{L} <: AbstractImageAnnotationDataSet
 end
 
 function ImageAnnotationDataSet{L}() where {L}
-    return ImageAnnotationDataSet(L[], AnnotatedImage[])
+    return ImageAnnotationDataSet{L}(L[], AnnotatedImage[])
 end
 
 function ImageAnnotationDataSet(annotated_images::Vector{AnnotatedImage})

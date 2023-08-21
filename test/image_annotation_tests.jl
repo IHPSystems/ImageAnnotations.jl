@@ -2,6 +2,19 @@ using ImageAnnotations
 using Test
 
 @testset "ImageAnnotation" begin
+    @testset "Construction" begin
+        type_param_combos = [Int, Float64, String]
+        type_combos(L) = [ImageAnnotation{L}, ImageAnnotation]
+        kwarg_combos = [(confidence = c, annotator_name = n) for c in [nothing, 0.5f0], n in [nothing, "annotator"]]
+        for TLabel in type_param_combos, TImageAnnotation in type_combos(TLabel), kwargs in kwarg_combos
+            label = ImageAnnotations.Dummies.create_label(TLabel)
+            annotation = TImageAnnotation(label; kwargs...)
+            @test annotation.label == label
+            @test annotation.confidence == kwargs.confidence
+            @test annotation.annotator_name == kwargs.annotator_name
+        end
+    end
+
     @testset "Accessors" begin
         for TLabel in [Int, Float64, String], confidence in [nothing, 0.5f0], annotator_name in [nothing, "annotator"]
             label = ImageAnnotations.Dummies.create_label(TLabel)

@@ -9,15 +9,17 @@ struct Concept{T} <: AbstractConcept
     examples::Vector{Dict{String, Any}}
 end
 
-function Concept(
+function Concept{T}(
     value::T;
     attributes::Vector{<:AbstractConceptAttribute} = Vector{AbstractConceptAttribute}(),
     description::AbstractString = "",
     examples::Vector{Dict{String, Any}} = Dict{String, Any}[],
 ) where {T}
     attributes_dict = Dict{String, AbstractConceptAttribute}([a.name => a for a in attributes])
-    return Concept(value, attributes_dict, description, examples)
+    return Concept{T}(value, attributes_dict, description, examples)
 end
+
+Concept(value::T; kwargs...) where {T} = Concept{T}(value; kwargs...)
 
 struct CategoricalConceptAttribute{T} <: AbstractConceptAttribute
     name::String
