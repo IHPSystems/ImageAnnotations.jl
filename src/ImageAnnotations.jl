@@ -23,6 +23,7 @@ export StaticObjectAnnotator
 include("label.jl")
 include("concept.jl")
 
+include("abstract_image_annotation.jl")
 include("image_annotation.jl")
 
 include("abstract_object_annotation.jl")

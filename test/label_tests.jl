@@ -20,4 +20,13 @@ using Test
             end
         end
     end
+    @testset "Base.isless" begin
+        @testset "Labels are sorted by value, then number of attributes" begin
+            a = Label(1)
+            b = Label(2)
+            c = Label(2, Dict{String, Any}("a" => 3))
+            @test isless(a, b)
+            @test isless(b, c)
+        end
+    end
 end

@@ -1,6 +1,7 @@
 using Test
 
 @testset "ImageAnnotations" begin
+    include("abstract_image_annotation_tests.jl")
     include("concept_tests.jl")
     include("image_annotation_tests.jl")
     include("label_tests.jl")
