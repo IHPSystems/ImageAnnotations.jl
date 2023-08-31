@@ -17,6 +17,8 @@ end
 function Base.isless(a::T, b::U) where {T <: AbstractObjectAnnotation, U <: AbstractObjectAnnotation}
     if Symbol(T) < Symbol(U)
         return true
+    elseif Symbol(U) < Symbol(T)
+        return false
     end
     a_box = get_bounding_box(a)
     b_box = get_bounding_box(b)

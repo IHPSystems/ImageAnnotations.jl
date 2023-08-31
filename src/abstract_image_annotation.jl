@@ -10,7 +10,7 @@ function Base.isless(a::T, b::U) where {T <: AbstractImageAnnotation, U <: Abstr
     elseif Symbol(U) < Symbol(T)
         return false
     end
-    if get_label(a) !== get_label(b)
+    if get_label(a) != get_label(b)
         return get_label(a) < get_label(b)
     end
     if get_confidence(a) === nothing
@@ -31,7 +31,7 @@ function Base.isless(a::T, b::U) where {T <: AbstractImageAnnotation, U <: Abstr
         if get_confidence(b) === nothing
             return false
         else
-            if get_confidence(a) !== get_confidence(b)
+            if get_confidence(a) != get_confidence(b)
                 return get_confidence(a) < get_confidence(b)
             else
                 if get_annotator_name(a) === nothing
