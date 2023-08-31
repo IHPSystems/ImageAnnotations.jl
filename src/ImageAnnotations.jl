@@ -8,10 +8,13 @@ export AbstractLabel, Label
 
 export AbstractImageAnnotation, ImageAnnotation, get_label, get_confidence, get_annotator_name
 
-export AbstractObjectAnnotation, get_centroid, get_bounding_box, compute_iou
-export BoundingBoxAnnotation, create_bounding_box_annotation_with_center
-export OrientedBoundingBoxAnnotation, get_width, get_height, get_orientation
-export PolygonAnnotation, get_vertices
+export AbstractObjectAnnotation, get_centroid, get_bounding_box, get_height, get_vertices, get_width, compute_iou
+
+export AbstractBoundingBoxAnnotation, BoundingBoxAnnotation, create_bounding_box_annotation_with_center, get_bottom_right, get_top_left
+
+export AbstractOrientedBoundingBoxAnnotation, OrientedBoundingBoxAnnotation, get_orientation
+
+export AbstractPolygonAnnotation, PolygonAnnotation
 
 export AbstractAnnotatedImage, AnnotatedImage, get_annotations
 

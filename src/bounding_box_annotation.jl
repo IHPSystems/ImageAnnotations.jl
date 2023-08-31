@@ -1,4 +1,10 @@
-struct BoundingBoxAnnotation{L, T} <: AbstractObjectAnnotation{L, T}
+abstract type AbstractBoundingBoxAnnotation{L, T} <: AbstractObjectAnnotation{L, T} end
+
+function get_bottom_right end
+
+function get_top_left end
+
+struct BoundingBoxAnnotation{L, T} <: AbstractBoundingBoxAnnotation{L, T}
     rect::Rect2{T}
     annotation::ImageAnnotation{L}
 end
@@ -106,6 +112,14 @@ function Base.:(==)(a::BoundingBoxAnnotation, b::BoundingBoxAnnotation)
 end
 
 # Accessors
+
+get_bottom_right(annotation::BoundingBoxAnnotation) = annotation.rect.origin + annotation.rect.widths
+
+get_height(annotation::BoundingBoxAnnotation) = annotation.rect.widths[2]
+
+get_top_left(annotation::BoundingBoxAnnotation) = annotation.rect.origin
+
+get_width(annotation::BoundingBoxAnnotation) = annotation.rect.widths[1]
 
 get_image_annotation(annotation::BoundingBoxAnnotation) = annotation.annotation
 

@@ -1,4 +1,6 @@
-struct PolygonAnnotation{L, T} <: AbstractObjectAnnotation{L, T}
+abstract type AbstractPolygonAnnotation{L, T} <: AbstractObjectAnnotation{L, T} end
+
+struct PolygonAnnotation{L, T} <: AbstractPolygonAnnotation{L, T}
     vertices::Vector{Point2{T}}
     annotation::ImageAnnotation{L}
 

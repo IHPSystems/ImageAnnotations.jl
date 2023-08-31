@@ -1,4 +1,8 @@
-struct OrientedBoundingBoxAnnotation{L, T} <: AbstractObjectAnnotation{L, T}
+abstract type AbstractOrientedBoundingBoxAnnotation{L, T} <: AbstractObjectAnnotation{L, T} end
+
+function get_orientation end
+
+struct OrientedBoundingBoxAnnotation{L, T} <: AbstractOrientedBoundingBoxAnnotation{L, T}
     center::Point2{T}
     width::T
     height::T

@@ -1,5 +1,11 @@
 abstract type AbstractObjectAnnotation{L, T <: Real} <: AbstractImageAnnotation{L} end
 
+function get_height end
+
+function get_vertices end
+
+function get_width end
+
 function get_image_annotation end
 
 get_label(annotation::AbstractObjectAnnotation) = get_label(get_image_annotation(annotation))
