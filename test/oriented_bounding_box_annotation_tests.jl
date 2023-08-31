@@ -51,11 +51,21 @@ using ImageAnnotations
 
     @testset "get_bounding_box" begin
         annotation = OrientedBoundingBoxAnnotation(Point2(3.0, 3.0), 4.0, 2.0, pi / 2, "car")
+        expected_rect = Rect2(Point2(2.0, 1.0), 2.0, 4.0)
+
         rect = get_bounding_box(annotation)
-        error_margin = 1.0e-5
-        origin_diff = rect.origin - Point2(2.0, 1.0)
-        @test abs(origin_diff.data[1]) < error_margin && abs(origin_diff.data[2]) < error_margin
-        widths_diff = rect.widths - Point2(2.0, 4.0)
-        @test abs(widths_diff.data[1]) < error_margin && abs(widths_diff.data[2]) < error_margin
+        @test rect.origin ≈ expected_rect.origin atol = 1.0e-5
+        @test rect.widths ≈ expected_rect.widths atol = 1.0e-5
+    end
+
+    @testset "get_vertices" begin
+        annotation = OrientedBoundingBoxAnnotation(Point2(3.0, 3.0), 4.0, 2.0, pi / 2, "car")
+        expected_vertices = [Point2(4.0, 1.0), Point2(4.0, 5.0), Point2(2.0, 5.0), Point2(2.0, 1.0)]
+
+        vertices = get_vertices(annotation)
+        @test length(vertices) == length(expected_vertices)
+        for (vertex, expected_vertex) in zip(vertices, expected_vertices)
+            @test vertex ≈ expected_vertex atol = 1.0e-5
+        end
     end
 end
