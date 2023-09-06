@@ -69,4 +69,15 @@ using Test
         annotation = BoundingBoxAnnotation(Point2(1.0, 2.0), 3.0, 4.0, "car")
         @test get_centroid(annotation) == Point2(2.5, 4.0)
     end
+
+    @testset "get_vertices" begin
+        annotation = BoundingBoxAnnotation(Point2(1.0, 2.0), 3.0, 4.0, "car")
+        expected_vertices = [Point2(1.0, 2.0), Point2(1.0, 6.0), Point2(4.0, 6.0), Point2(4.0, 2.0)]
+
+        vertices = get_vertices(annotation)
+        @test length(vertices) == length(expected_vertices)
+        for (vertex, expected_vertex) in zip(vertices, expected_vertices)
+            @test vertex ≈ expected_vertex atol = 1.0e-5
+        end
+    end
 end

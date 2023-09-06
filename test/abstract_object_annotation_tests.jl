@@ -17,12 +17,12 @@ using Test
             d = BoundingBoxAnnotation(Point2(0, 1), 1, 1, "aeroplane")
             e = BoundingBoxAnnotation(Point2(1, 0), 1, 1, "aeroplane")
             f = BoundingBoxAnnotation(Point2(1, 0), 1, 1, "car")
-            g = PolygonAnnotation(Point2.(coordinates(get_bounding_box(a))), "aeroplane")
-            h = PolygonAnnotation(Point2.(coordinates(get_bounding_box(b))), "aeroplane")
-            i = PolygonAnnotation(Point2.(coordinates(get_bounding_box(c))), "aeroplane")
-            j = PolygonAnnotation(Point2.(coordinates(get_bounding_box(d))), "aeroplane")
-            k = PolygonAnnotation(Point2.(coordinates(get_bounding_box(e))), "aeroplane")
-            l = PolygonAnnotation(Point2.(coordinates(get_bounding_box(f))), "car")
+            g = PolygonAnnotation(get_vertices(a), "aeroplane")
+            h = PolygonAnnotation(get_vertices(b), "aeroplane")
+            i = PolygonAnnotation(get_vertices(c), "aeroplane")
+            j = PolygonAnnotation(get_vertices(d), "aeroplane")
+            k = PolygonAnnotation(get_vertices(e), "aeroplane")
+            l = PolygonAnnotation(get_vertices(f), "car")
             annotations = [a b c d e f g h i j k l]
             for (idx1, x) in enumerate(annotations), (idx2, y) in enumerate(annotations)
                 if idx1 >= idx2

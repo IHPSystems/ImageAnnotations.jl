@@ -144,3 +144,12 @@ end
 function get_centroid(annotation::BoundingBoxAnnotation{L, T})::Point2{Float64} where {L, T}
     return get_bounding_box(annotation).origin + get_bounding_box(annotation).widths / 2
 end
+
+function get_vertices(annotation::BoundingBoxAnnotation{L, T})::Vector{Point2{T}} where {L, T}
+    return [
+        get_top_left(annotation),
+        get_top_left(annotation) + Point2{T}(zero(T), get_height(annotation)),
+        get_bottom_right(annotation),
+        get_top_left(annotation) + Point2{T}(get_width(annotation), zero(T)),
+    ]
+end
