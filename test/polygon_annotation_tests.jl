@@ -65,4 +65,35 @@ using Test
         annotation = PolygonAnnotation([Point2(2.0, 2.0), Point2(4.0, 2.0), Point2(3.0, 3.0)], "car")
         @test get_centroid(annotation) == [3, 7 / 3]
     end
+
+    @testset "simplify_geometry" begin
+        angular_atol = 1e-256
+        @testset "Rectangles are converted to BoundingBoxAnnotation" begin
+            expected_annotation = BoundingBoxAnnotation(Point2(0.0, 0.0), 1.0, 1.0, "car")
+            annotation = PolygonAnnotation(get_vertices(expected_annotation), "car")
+            @test simplify_geometry(annotation; angular_atol = angular_atol) == expected_annotation
+        end
+        @testset "Oriented rectangles are converted to OrientedBoundingBoxAnnotation" begin
+            annotation = PolygonAnnotation([Point2(0.0, 0.0), Point2(1.0, 1.0), Point2(0.0, 2.0), Point2(-1.0, 1.0)], "car")
+            expected_annotation = OrientedBoundingBoxAnnotation(Point2(0.0, 1.0), sqrt(2.0), sqrt(2.0), pi / 4, "car")
+            @test simplify_geometry(annotation; angular_atol = angular_atol) ≈ expected_annotation
+        end
+        for numerator in (-(2 * 8)):(2 * 8)
+            theta = numerator * pi / 8
+            if mod(theta, pi / 2) == 0.0
+                @testset "Oriented rectangles with θ = $(numerator)π / 8 are converted to OrientedBoundingBoxAnnotation" begin
+                    oriented_annotation = OrientedBoundingBoxAnnotation(Point2(0.0, 1.0), 2.0, 3.0, theta, "car")
+                    expected_annotation = BoundingBoxAnnotation(get_bounding_box(oriented_annotation), "car")
+                    annotation = PolygonAnnotation(get_vertices(expected_annotation), "car")
+                    @test simplify_geometry(annotation; angular_atol = angular_atol) == expected_annotation
+                end
+            else
+                @testset "Oriented rectangles with θ = $(numerator)π / 8 are converted to OrientedBoundingBoxAnnotation" begin
+                    expected_annotation = OrientedBoundingBoxAnnotation(Point2(0.0, 1.0), 2.0, 3.0, theta, "car")
+                    annotation = PolygonAnnotation(get_vertices(expected_annotation), "car")
+                    @test simplify_geometry(annotation; angular_atol = angular_atol) ≈ expected_annotation orientation_symmetry = true
+                end
+            end
+        end
+    end
 end

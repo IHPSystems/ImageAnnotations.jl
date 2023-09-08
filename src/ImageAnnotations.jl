@@ -1,6 +1,7 @@
 module ImageAnnotations
 
 using GeometryBasics
+using LinearAlgebra
 
 export AbstractConcept, AbstractConceptAttribute, CategoricalConceptAttribute, Concept
 
@@ -14,7 +15,7 @@ export AbstractBoundingBoxAnnotation, BoundingBoxAnnotation, create_bounding_box
 
 export AbstractOrientedBoundingBoxAnnotation, OrientedBoundingBoxAnnotation, get_orientation
 
-export AbstractPolygonAnnotation, PolygonAnnotation
+export AbstractPolygonAnnotation, PolygonAnnotation, simplify_geometry
 
 export AbstractAnnotatedImage, AnnotatedImage, get_annotations
 
