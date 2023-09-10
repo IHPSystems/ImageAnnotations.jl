@@ -6,12 +6,8 @@ struct OrientedBoundingBoxAnnotation{L, T} <: AbstractOrientedBoundingBoxAnnotat
     center::Point2{T}
     width::T
     height::T
-    orientation::Float32
+    orientation::T
     annotation::ImageAnnotation{L}
-end
-
-function OrientedBoundingBoxAnnotation(center::Point2{T}, width::T, height::T, orientation::T, annotation::ImageAnnotation{L}) where {L, T}
-    return OrientedBoundingBoxAnnotation{L, T}(center, width, height, orientation, annotation)
 end
 
 # Construction with label, and kwargs...
@@ -39,7 +35,7 @@ end
 
 get_width(annotation::OrientedBoundingBoxAnnotation) = annotation.width
 get_height(annotation::OrientedBoundingBoxAnnotation) = annotation.height
-get_orientation(annotation::OrientedBoundingBoxAnnotation)::Float32 = annotation.orientation
+get_orientation(annotation::OrientedBoundingBoxAnnotation) = annotation.orientation
 
 get_image_annotation(annotation::OrientedBoundingBoxAnnotation) = annotation.annotation
 
