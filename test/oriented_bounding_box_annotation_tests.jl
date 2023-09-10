@@ -1,5 +1,6 @@
 using GeometryBasics
 using ImageAnnotations
+using Test
 
 @testset "OrientedBoundingBoxAnnotationTests" begin
     @testset "Construction" begin

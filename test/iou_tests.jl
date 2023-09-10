@@ -1,5 +1,6 @@
 using GeometryBasics
 using ImageAnnotations
+using Test
 
 @testset "Intersection over Union" begin
     label = "class"
