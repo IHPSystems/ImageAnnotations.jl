@@ -35,6 +35,10 @@ function Base.:(==)(a::PolygonAnnotation, b::PolygonAnnotation)
     return a.vertices == b.vertices && a.annotation == b.annotation
 end
 
+function Base.isapprox(a::PolygonAnnotation, b::PolygonAnnotation; kwargs...)
+    return isapprox(a.vertices, b.vertices; kwargs...) && isapprox(a.annotation, b.annotation; kwargs...)
+end
+
 # Accessors
 
 get_vertices(annotation::PolygonAnnotation)::Vector{Point2} = annotation.vertices

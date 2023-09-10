@@ -42,6 +42,18 @@ using Test
             PolygonAnnotation([Point2(2.0, 2.0), Point2(4.0, 2.0), Point2(3.0, 4.0)], "car")
     end
 
+    @testset "Base.isapprox" begin
+        linear_atol = 1e-1
+        approx(v, eps = 1e-2) = v + linear_atol - eps
+        napprox(v, eps = 1e-2) = v + linear_atol + eps
+        a = PolygonAnnotation([Point2(2.0, 2.0), Point2(4.0, 2.0), Point2(3.0, 3.0)], "car")
+
+        b = PolygonAnnotation([Point2(2.0, 2.0), Point2(4.0, 2.0), Point2(3.0, approx(3.0))], "car")
+        c = PolygonAnnotation([Point2(2.0, 2.0), Point2(4.0, 2.0), Point2(3.0, napprox(3.0))], "car")
+        @test a ≈ b atol = linear_atol
+        @test a ≉ c atol = linear_atol
+    end
+
     @testset "get_bounding_box" begin
         annotation = PolygonAnnotation([Point2(2.0, 2.0), Point2(4.0, 2.0), Point2(3.0, 3.0)], "car")
         rect = get_bounding_box(annotation)

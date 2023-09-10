@@ -75,4 +75,33 @@ using Test
             @test isless(f, g)
         end
     end
+
+    @testset "Base.isapprox" begin
+        for TLabel in [Int, Float64, String]
+            a_label = ImageAnnotations.Dummies.create_label(TLabel)
+            if TLabel <: AbstractFloat
+                @testset "Annotations of $TLabel isapprox if label isapprox" begin
+                    label_atol = eps(TLabel)
+                    b_label = a_label + label_atol - eps(TLabel)
+                    c_label = a_label + label_atol + eps(TLabel)
+                    @assert isapprox(a_label, b_label; atol = label_atol)
+                    @assert !isapprox(a_label, c_label; atol = label_atol)
+
+                    a = ImageAnnotation(a_label)
+                    b = ImageAnnotation(b_label)
+                    c = ImageAnnotation(c_label)
+                    @test a ≈ b atol = label_atol
+                    @test a ≉ c atol = label_atol
+                end
+            else
+                @testset "Annotations of $TLabel isapprox if label isequal" begin
+                    label_atol = 0
+                    b_label = ImageAnnotations.Dummies.create_label(TLabel)
+                    a = ImageAnnotation(a_label)
+                    b = ImageAnnotation(b_label)
+                    @test a ≈ b atol = label_atol
+                end
+            end
+        end
+    end
 end

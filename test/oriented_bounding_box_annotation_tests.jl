@@ -50,6 +50,41 @@ using Test
             OrientedBoundingBoxAnnotation(Point2(1.0, 3.0), 3.0, 4.0, pi / 2, "car")
     end
 
+    @testset "Base.isapprox" begin
+        linear_atol = 1e-1
+        approx(v, atol = linear_atol, eps = 1e-2) = v + atol - eps
+        napprox(v, atol = linear_atol, eps = 1e-2) = v + atol + eps
+        a = OrientedBoundingBoxAnnotation(Point2(1.0, 2.0), 3.0, 4.0, pi / 2, "car")
+
+        b = OrientedBoundingBoxAnnotation(Point2(1.0, 2.0), 3.0, 4.0, approx(pi / 2, pi / 64, pi / 128), "car")
+        c = OrientedBoundingBoxAnnotation(Point2(1.0, 2.0), 3.0, 4.0, napprox(pi / 2, pi / 64, pi / 128), "car")
+        d = OrientedBoundingBoxAnnotation(Point2(1.0, 2.0), 3.0, 4.0, pi / 2 - 2pi, "car")
+        e = OrientedBoundingBoxAnnotation(Point2(1.0, 2.0), 3.0, 4.0, pi / 2 - pi, "car")
+        f = OrientedBoundingBoxAnnotation(Point2(1.0, 2.0), 3.0, 4.0, pi / 2 + pi, "car")
+        g = OrientedBoundingBoxAnnotation(Point2(1.0, 2.0), 3.0, 4.0, pi / 2 + 2pi, "car")
+        @test a ≈ b atol = pi / 64
+        @test a ≉ c atol = pi / 64
+        @test a ≈ d orientation_symmetry = true
+        @test a ≈ e orientation_symmetry = true
+        @test a ≈ f orientation_symmetry = true
+        @test a ≈ g orientation_symmetry = true
+
+        b = OrientedBoundingBoxAnnotation(Point2(1.0, 2.0), 3.0, approx(4.0), pi / 2, "car")
+        c = OrientedBoundingBoxAnnotation(Point2(1.0, 2.0), 3.0, napprox(4.0), pi / 2, "car")
+        @test a ≈ b atol = linear_atol
+        @test a ≉ c atol = linear_atol
+
+        b = OrientedBoundingBoxAnnotation(Point2(1.0, 2.0), approx(3.0), 4.0, pi / 2, "car")
+        c = OrientedBoundingBoxAnnotation(Point2(1.0, 2.0), napprox(3.0), 4.0, pi / 2, "car")
+        @test a ≈ b atol = linear_atol
+        @test a ≉ c atol = linear_atol
+
+        b = OrientedBoundingBoxAnnotation(Point2(1.0, approx(2.0)), 3.0, 4.0, pi / 2, "car")
+        c = OrientedBoundingBoxAnnotation(Point2(1.0, napprox(2.0)), 3.0, 4.0, pi / 2, "car")
+        @test a ≈ b atol = linear_atol
+        @test a ≉ c atol = linear_atol
+    end
+
     @testset "get_bounding_box" begin
         annotation = OrientedBoundingBoxAnnotation(Point2(3.0, 3.0), 4.0, 2.0, pi / 2, "car")
         expected_rect = Rect2(Point2(2.0, 1.0), 2.0, 4.0)

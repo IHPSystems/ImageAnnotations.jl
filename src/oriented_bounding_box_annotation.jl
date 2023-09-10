@@ -31,6 +31,27 @@ function Base.:(==)(a::OrientedBoundingBoxAnnotation, b::OrientedBoundingBoxAnno
            a.annotation == b.annotation
 end
 
+function Base.isapprox(
+    a::OrientedBoundingBoxAnnotation{L, T},
+    b::OrientedBoundingBoxAnnotation{L, T};
+    atol::Real = zero(T),
+    rtol::Real = atol > 0 ? zero(T) : √eps(T),
+    linear_atol::Real = atol,
+    linear_rtol::Real = rtol,
+    angular_atol::Real = atol,
+    angular_rtol::Real = rtol,
+    orientation_symmetry::Bool = false,
+    kwargs...,
+) where {L, T}
+    a_orientation = orientation_symmetry ? mod(a.orientation, π) : a.orientation
+    b_orientation = orientation_symmetry ? mod(b.orientation, π) : b.orientation
+    return isapprox(a.center, b.center; atol = linear_atol, rtol = linear_rtol, kwargs...) &&
+           isapprox(a.width, b.width; atol = linear_atol, rtol = linear_rtol, kwargs...) &&
+           isapprox(a.height, b.height; atol = linear_atol, rtol = linear_rtol, kwargs...) &&
+           isapprox(a_orientation, b_orientation; atol = angular_atol, rtol = angular_rtol, kwargs...) &&
+           isapprox(a.annotation, b.annotation; atol = atol, rtol = rtol, kwargs...)
+end
+
 # Accessors
 
 get_width(annotation::OrientedBoundingBoxAnnotation) = annotation.width

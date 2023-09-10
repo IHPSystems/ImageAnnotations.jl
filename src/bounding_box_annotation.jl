@@ -111,6 +111,12 @@ function Base.:(==)(a::BoundingBoxAnnotation, b::BoundingBoxAnnotation)
     return a.rect == b.rect && a.annotation == b.annotation
 end
 
+function Base.isapprox(a::BoundingBoxAnnotation, b::BoundingBoxAnnotation; kwargs...)
+    return isapprox(a.rect.origin, b.rect.origin; kwargs...) &&
+           isapprox(a.rect.widths, b.rect.widths; kwargs...) &&
+           isapprox(a.annotation, b.annotation; kwargs...)
+end
+
 # Accessors
 
 get_bottom_right(annotation::BoundingBoxAnnotation) = annotation.rect.origin + annotation.rect.widths

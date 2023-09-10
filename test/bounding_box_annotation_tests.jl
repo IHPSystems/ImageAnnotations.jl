@@ -65,6 +65,28 @@ using Test
         @test BoundingBoxAnnotation(Point2(1.0, 2.0), 3.0, 4.0, "car") != BoundingBoxAnnotation(Point2(1.0, 3.0), 3.0, 4.0, "car")
     end
 
+    @testset "Base.isapprox" begin
+        linear_atol = 1e-1
+        approx(v, eps = 1e-2) = v + linear_atol - eps
+        napprox(v, eps = 1e-2) = v + linear_atol + eps
+        a = BoundingBoxAnnotation(Point2(1.0, 2.0), 3.0, 4.0, "car")
+
+        b = BoundingBoxAnnotation(Point2(1.0, 2.0), 3.0, approx(4.0), "car")
+        c = BoundingBoxAnnotation(Point2(1.0, 2.0), 3.0, napprox(4.0), "car")
+        @test a ≈ b atol = linear_atol
+        @test a ≉ c atol = linear_atol
+
+        b = BoundingBoxAnnotation(Point2(1.0, 2.0), approx(3.0), 4.0, "car")
+        c = BoundingBoxAnnotation(Point2(1.0, 2.0), napprox(3.0), 4.0, "car")
+        @test a ≈ b atol = linear_atol
+        @test a ≉ c atol = linear_atol
+
+        b = BoundingBoxAnnotation(Point2(1.0, approx(2.0)), 3.0, 4.0, "car")
+        c = BoundingBoxAnnotation(Point2(1.0, napprox(2.0)), 3.0, 4.0, "car")
+        @test a ≈ b atol = linear_atol
+        @test a ≉ c atol = linear_atol
+    end
+
     @testset "get_centroid" begin
         annotation = BoundingBoxAnnotation(Point2(1.0, 2.0), 3.0, 4.0, "car")
         @test get_centroid(annotation) == Point2(2.5, 4.0)
