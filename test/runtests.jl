@@ -13,4 +13,5 @@ using Test
     include("iou_tests.jl")
     include("annotated_image_tests.jl")
     include("data_set_tests.jl")
+    include("dummies_tests.jl")
 end

@@ -7,15 +7,18 @@ using Test
         @test get_annotations(empty_annotated_image) == []
     end
     @testset "Construction with single annotation" begin
-        annotated_image = AnnotatedImage(ImageAnnotation(1))
+        annotation = ImageAnnotations.Dummies.create_image_annotation_1()
+        annotated_image = AnnotatedImage(annotation)
         @test length(get_annotations(annotated_image)) == 1
     end
     @testset "Construction with multiple annotations" begin
-        annotated_image = AnnotatedImage([ImageAnnotation(1), ImageAnnotation(2)])
+        annotations = [ImageAnnotations.Dummies.create_image_annotation_1(), ImageAnnotations.Dummies.create_image_annotation_2()]
+        annotated_image = AnnotatedImage(annotations)
         @test length(get_annotations(annotated_image)) == 2
     end
     @testset "Construction with a mix of annotation types" begin
-        annotated_image = AnnotatedImage([ImageAnnotation(1), BoundingBoxAnnotation(Point2(0.0, 1.0), 2.0, 3.0, "class")])
+        annotations = [ImageAnnotations.Dummies.create_image_annotation_1(), ImageAnnotations.Dummies.create_bounding_box_annotation_1()]
+        annotated_image = AnnotatedImage(annotations)
         @test length(get_annotations(annotated_image)) == 2
     end
 

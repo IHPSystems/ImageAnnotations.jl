@@ -7,7 +7,7 @@ using Test
         type_combos(L) = [ImageAnnotation{L}, ImageAnnotation]
         kwarg_combos = [(confidence = c, annotator_name = n) for c in [nothing, 0.5f0], n in [nothing, "annotator"]]
         for TLabel in type_param_combos, TImageAnnotation in type_combos(TLabel), kwargs in kwarg_combos
-            label = ImageAnnotations.Dummies.create_label(TLabel)
+            label = ImageAnnotations.Dummies.create_label_1(TLabel)
             annotation = TImageAnnotation(label; kwargs...)
             @test annotation.label == label
             @test annotation.confidence == kwargs.confidence
@@ -17,7 +17,7 @@ using Test
 
     @testset "Accessors" begin
         for TLabel in [Int, Float64, String], confidence in [nothing, 0.5f0], annotator_name in [nothing, "annotator"]
-            label = ImageAnnotations.Dummies.create_label(TLabel)
+            label = ImageAnnotations.Dummies.create_label_1(TLabel)
             annotation = ImageAnnotation(label; confidence = confidence, annotator_name = annotator_name)
             @test get_label(annotation) == label
             @test get_confidence(annotation) == confidence
@@ -78,7 +78,7 @@ using Test
 
     @testset "Base.isapprox" begin
         for TLabel in [Int, Float64, String]
-            a_label = ImageAnnotations.Dummies.create_label(TLabel)
+            a_label = ImageAnnotations.Dummies.create_label_1(TLabel)
             if TLabel <: AbstractFloat
                 @testset "Annotations of $TLabel isapprox if label isapprox" begin
                     label_atol = eps(TLabel)
@@ -96,7 +96,7 @@ using Test
             else
                 @testset "Annotations of $TLabel isapprox if label isequal" begin
                     label_atol = 0
-                    b_label = ImageAnnotations.Dummies.create_label(TLabel)
+                    b_label = ImageAnnotations.Dummies.create_label_1(TLabel)
                     a = ImageAnnotation(a_label)
                     b = ImageAnnotation(b_label)
                     @test a ≈ b atol = label_atol

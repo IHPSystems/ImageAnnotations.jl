@@ -11,7 +11,7 @@ using Test
         annotator_name = "annotator"
         kwarg_combos = [NamedTuple(), (confidence = confidence,), (confidence = confidence, annotator_name = annotator_name)]
         for (L, T) in type_param_combos, TAnnotation in type_combos(L, T), TLabelArg in label_arg_combos(L), kwargs in kwarg_combos
-            label = ImageAnnotations.Dummies.create_label(L)
+            label = ImageAnnotations.Dummies.create_label_1(L)
             if TLabelArg == ImageAnnotation{L}
                 label_args = (ImageAnnotation(label; kwargs...),)
                 kwargs = NamedTuple()

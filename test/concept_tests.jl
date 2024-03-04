@@ -13,7 +13,7 @@ using Test
                 attributes = Dict{String, AbstractConceptAttribute}([a.name => a for a in kwargs.attributes])
             end
             @testset "$TConcept with type parameter $T and kwargs $kwargs" begin
-                concept_value = ImageAnnotations.Dummies.create_label(T)
+                concept_value = ImageAnnotations.Dummies.create_label_1(T)
                 concept = TConcept(concept_value; kwargs...)
                 @test concept.value == concept_value
                 @test concept.attributes == attributes

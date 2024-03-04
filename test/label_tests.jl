@@ -13,7 +13,7 @@ using Test
                 label_attributes = args[1]
             end
             @testset "$TLabel with type parameter $T and args $args" begin
-                label_value = ImageAnnotations.Dummies.create_label(T)
+                label_value = ImageAnnotations.Dummies.create_label_1(T)
                 label = TLabel(label_value, args...)
                 @test label.value == label_value
                 @test label.attributes == label_attributes
